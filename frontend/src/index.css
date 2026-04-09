@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --app-bg: #0f172a;
+  --page-bg: #000000;
+  --panel-bg: #0a0a0a;
+  --panel-border: #222222;
+  --panel-border-strong: #333333;
+  --text-primary: #f8fafc;
+  --text-secondary: #a1a1aa;
+  --text-muted: #666666;
+  --input-bg: #0a0a0a;
+  --input-border: #222222;
+  --placeholder: #333333;
+  --surface-strong: #111111;
+  --shadow-color: rgba(255,255,255,0.08);
+  --bg-shape-1: rgba(59,130,246,0.16);
+  --bg-shape-2: rgba(16,185,129,0.08);
+}
+
+body.light {
+  --app-bg: #f8fafc;
+  --page-bg: #ffffff;
+  --panel-bg: #ffffff;
+  --panel-border: #d1d5db;
+  --panel-border-strong: #cbd5e1;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-muted: #475569;
+  --input-bg: #f1f5f9;
+  --input-border: #cbd5e1;
+  --placeholder: #94a3b8;
+  --surface-strong: #e2e8f0;
+  --shadow-color: rgba(15,23,42,0.08);
+  --bg-shape-1: rgba(59,130,246,0.16);
+  --bg-shape-2: rgba(16,185,129,0.08);
+}
+
+body.ocean {
+  --app-bg: #071a2f;
+  --page-bg: #06203b;
+  --panel-bg: #091f33;
+  --panel-border: #16445e;
+  --panel-border-strong: #1f5775;
+  --text-primary: #e2f8ff;
+  --text-secondary: #8bdaf0;
+  --text-muted: #94a3b8;
+  --input-bg: #0b2846;
+  --input-border: #16445e;
+  --placeholder: #7dd3fc;
+  --surface-strong: #0f3c61;
+  --shadow-color: rgba(56,189,248,0.12);
+  --bg-shape-1: rgba(56,189,248,0.22);
+  --bg-shape-2: rgba(14,165,233,0.12);
+}
+
+body.sunset {
+  --app-bg: #1f1727;
+  --page-bg: #2c1f3d;
+  --panel-bg: #311f43;
+  --panel-border: #6d3a67;
+  --panel-border-strong: #7f3d8b;
+  --text-primary: #fffbf7;
+  --text-secondary: #f9a8d4;
+  --text-muted: #c4b5fd;
+  --input-bg: #3a274c;
+  --input-border: #6d3a67;
+  --placeholder: #fbcfe8;
+  --surface-strong: #452b62;
+  --shadow-color: rgba(251,146,60,0.14);
+  --bg-shape-1: rgba(251,146,60,0.18);
+  --bg-shape-2: rgba(236,72,153,0.12);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--app-bg);
+  background-image: radial-gradient(circle at top left, var(--bg-shape-1), transparent 24%), radial-gradient(circle at 80% 20%, var(--bg-shape-2), transparent 30%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: var(--text-primary);
+  font-family: 'Inter', sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+  transition: all 0.25s ease;
+}
+
+body.dark ::selection {
+  background: #ffffff;
+  color: #000000;
+}
+
+body.light ::selection {
+  background: #000000;
+  color: #ffffff;
+}
+
+/* Optional: Custom scrollbar for dark mode */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 10px;
+}
