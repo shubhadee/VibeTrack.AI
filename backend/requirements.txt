@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+google-api-python-client
+requests
+python-dotenv
+transformers
+torch
+tweepy
+apify-client
