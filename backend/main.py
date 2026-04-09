@@ -1,9 +1,13 @@
+import os
+from pathlib import Path
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 import uvicorn
 from scraper import (
-    fetch_youtube_comments, 
-    fetch_twitter_data, 
+    fetch_youtube_comments,
+    fetch_twitter_data,
     fetch_instagram_data
 )
 from engine import analyze_sentiment
@@ -11,7 +15,7 @@ from engine import analyze_sentiment
 app = FastAPI()
 
 # --- THE CORS FIX ---
-# This allows your React Frontend (port 3000) to talk to this Python Backend (port 8000)
+# This allows cross-origin requests for the frontend or other clients.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -20,15 +24,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-@app.get("/")
-def home():
+build_dir = Path(__file__).resolve().parent.parent / "frontend" / "build"
+if build_dir.exists():
+    app.mount("/", StaticFiles(directory=str(build_dir), html=True), name="frontend")
+
+@app.get("/api/status")
+def status():
     return {"status": "SentiMetrics Backend is Online"}
 
 @app.get("/analyze")
 async def analyze(query: str, platform: str):
     print(f"--- Incoming Request: Query='{query}', Platform='{platform}' ---")
-    
-    # 1. Fetch Data from Scraper
+
     metadata = None
     if platform.lower() == "youtube":
         fetched = fetch_youtube_comments(query)
@@ -38,21 +45,20 @@ async def analyze(query: str, platform: str):
         fetched = fetch_instagram_data(query)
     else:
         fetched = []
-        
+
     if isinstance(fetched, dict):
         raw_data = fetched.get("comments", [])
         metadata = fetched.get("metadata", None)
     else:
         raw_data = fetched
-        
+
     if not raw_data:
         print("No data found for this query.")
         return {"analysis": [], "word_cloud": [], "metadata": None}
 
-    # 2. Run AI Sentiment Analysis
     print(f"Analyzing {len(raw_data)} comments...")
     analysis, word_cloud = analyze_sentiment(raw_data)
-    
+
     print("Analysis complete. Sending data to Frontend.")
     return {
         "analysis": analysis,
@@ -61,5 +67,4 @@ async def analyze(query: str, platform: str):
     }
 
 if __name__ == "__main__":
-    # Runs the server on localhost:8000
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("PORT", 8000)))

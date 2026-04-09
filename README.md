@@ -138,6 +138,20 @@ The backend requires the following environment variables:
 - If using Twitter/X, ensure your access tier supports tweet and replies queries.
 - Instagram scraping uses an Apify actor and may require an active Apify account.
 
+## Render Deployment
+
+This repository includes `render.yaml` for Render deployment automation.
+
+- Backend service: runs from `backend/` using Python and Uvicorn.
+- Frontend service: builds from `frontend/` and publishes `build/` as a static site.
+- Render will use `$PORT` to launch the backend automatically.
+
+Make sure to configure these environment variables in Render:
+
+- `YOUTUBE_API_KEY`
+- `TWITTER_BEARER_TOKEN`
+- `APIFY_API_TOKEN`
+
 ## GitHub Repository
 
 This repository is configured as a normal Git project with the frontend stored as tracked files, not as a nested submodule.
