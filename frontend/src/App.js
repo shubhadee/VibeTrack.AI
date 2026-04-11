@@ -30,7 +30,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({ analysis: [], word_cloud: [] });
   const [theme, setTheme] = useState('dark');
-  const [currentPage, setCurrentPage] = useState('dashboard');
+  const [currentPage, setCurrentPage] = useState('landing');
   const [toast, setToast] = useState('');
   const [hasAnalyzed, setHasAnalyzed] = useState(false);
 
@@ -174,30 +174,33 @@ export default function App() {
 
   return (
     <div className={`flex min-h-screen font-sans transition-colors duration-500 ${isDark ? 'bg-black text-white selection:bg-white selection:text-black' : 'bg-slate-100 text-slate-900 selection:bg-slate-900 selection:text-white'}`}>
-      <Sidebar theme={theme} isOpen={sidebarOpen} setIsOpen={setSidebarOpen} currentView={currentPage} setCurrentView={setCurrentPage} />
-
-      <main className={`relative flex-1 transition-all duration-300 ${sidebarOpen ? 'lg:ml-64' : 'lg:ml-20'}`}>
-        <div className={`fixed right-6 top-6 z-50 rounded-full border px-5 py-3 text-sm shadow-2xl backdrop-blur-xl transition-all duration-300 ${toast ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3 pointer-events-none'} ${isDark ? 'border-white/10 bg-slate-950/85 text-white' : 'border-slate-200 bg-white/95 text-slate-900'}`}>
-          {toast}
-        </div>
+      <main className={`relative flex-1 transition-all duration-300 ${currentPage !== 'landing' && sidebarOpen ? 'lg:ml-64' : currentPage !== 'landing' ? 'lg:ml-20' : ''}`}>
+        {currentPage !== 'landing' && (
+          <div className={`fixed right-6 top-6 z-50 rounded-full border px-5 py-3 text-sm shadow-2xl backdrop-blur-xl transition-all duration-300 ${toast ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3 pointer-events-none'} ${isDark ? 'border-white/10 bg-slate-950/85 text-white' : 'border-slate-200 bg-white/95 text-slate-900'}`}>
+            {toast}
+          </div>
+        )}
         {/* Mobile Header */}
+        {currentPage !== 'landing' && (
           <div className={`lg:hidden flex items-center justify-between p-4 border-b ${isDark ? 'border-[#222]' : 'border-slate-200'}`}>
-          <button onClick={() => setSidebarOpen(true)} className={isDark ? 'text-white' : 'text-slate-900'}>
-            <Menu size={24}/>
-          </button>
-          <span className={`font-black uppercase tracking-tighter ${isDark ? 'text-white' : 'text-slate-900'}`}>VibeTrack</span>
-          <button onClick={cycleTheme} className={`rounded-full border px-3 py-2 text-sm font-semibold transition ${isDark ? 'border-white/20 bg-white text-black' : 'border-slate-300 bg-slate-900 text-white'}`}>
-            {themeLabel}
-          </button>
-        </div>
+            <button onClick={() => setSidebarOpen(true)} className={isDark ? 'text-white' : 'text-slate-900'}>
+              <Menu size={24}/>
+            </button>
+            <span className={`font-black uppercase tracking-tighter ${isDark ? 'text-white' : 'text-slate-900'}`}>VibeTrack</span>
+            <button onClick={cycleTheme} className={`rounded-full border px-3 py-2 text-sm font-semibold transition ${isDark ? 'border-white/20 bg-white text-black' : 'border-slate-300 bg-slate-900 text-white'}`}>
+              {themeLabel}
+            </button>
+          </div>
+        )}
 
-        <div className="p-6 md:p-10 max-w-7xl mx-auto">
-          {/* Header Section */}
-          <header className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <h1 className={`text-5xl font-black tracking-tighter uppercase leading-none ${isDark ? 'text-white' : 'text-slate-900'}`}>
-                VibeTrack<span className="text-[var(--text-secondary)]">.AI</span>
-              </h1>
+        {currentPage !== 'landing' && (
+          <div className="p-6 md:p-10 max-w-7xl mx-auto">
+            {/* Header Section */}
+            <header className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
+              <div>
+                <h1 className={`text-5xl font-black tracking-tighter uppercase leading-none ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                  VibeTrack<span className="text-[var(--text-secondary)]">.AI</span>
+                </h1>
               <p className="mt-4 max-w-2xl text-base leading-8 text-[var(--text-secondary)]">
                 Transform social media signals into polished sentiment insights, keyword intelligence, and audience-ready reports.
               </p>
@@ -270,8 +273,118 @@ export default function App() {
           </div>
 
           {/* Page Content */}
-          {currentPage === 'dashboard' && (
-            <>
+{currentPage === 'landing' ? (
+          <div className="min-h-screen flex flex-col">
+            {/* Hero Section */}
+            <section className="flex-1 flex items-center justify-center px-6 py-20">
+              <div className="max-w-4xl mx-auto text-center">
+                <h1 className={`text-6xl md:text-7xl font-black tracking-tighter uppercase leading-none mb-6 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                  VibeTrack<span className="text-[var(--text-secondary)]">.AI</span>
+                </h1>
+                <p className={`text-xl md:text-2xl mb-8 max-w-2xl mx-auto ${isDark ? 'text-gray-300' : 'text-slate-600'}`}>
+                  Transform social media signals into polished sentiment insights, keyword intelligence, and audience-ready reports.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                  <button 
+                    onClick={() => setCurrentPage('dashboard')}
+                    className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-2xl text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+                  >
+                    Get Started
+                  </button>
+                  <button 
+                    onClick={() => setCurrentPage('explore')}
+                    className={`border-2 ${isDark ? 'border-white text-white hover:bg-white hover:text-black' : 'border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white'} font-bold py-4 px-8 rounded-2xl text-lg transition-all duration-300`}
+                  >
+                    Explore Features
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            {/* Features Section */}
+            <section className="py-20 px-6">
+              <div className="max-w-6xl mx-auto">
+                <h2 className={`text-4xl font-black text-center mb-12 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                  Powerful Social Analytics
+                </h2>
+                <div className="grid md:grid-cols-3 gap-8">
+                  <div className={`${isDark ? 'bg-slate-800' : 'bg-white'} p-8 rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300`}>
+                    <Youtube className="w-12 h-12 text-red-500 mb-4" />
+                    <h3 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>YouTube Analysis</h3>
+                    <p className={`${isDark ? 'text-gray-300' : 'text-slate-600'}`}>
+                      Analyze YouTube video comments for sentiment, keywords, and audience engagement metrics.
+                    </p>
+                  </div>
+                  <div className={`${isDark ? 'bg-slate-800' : 'bg-white'} p-8 rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300`}>
+                    <Twitter className="w-12 h-12 text-blue-400 mb-4" />
+                    <h3 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>Twitter Insights</h3>
+                    <p className={`${isDark ? 'text-gray-300' : 'text-slate-600'}`}>
+                      Extract sentiment from Twitter threads and replies with real-time trend analysis.
+                    </p>
+                  </div>
+                  <div className={`${isDark ? 'bg-slate-800' : 'bg-white'} p-8 rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300`}>
+                    <Instagram className="w-12 h-12 text-pink-500 mb-4" />
+                    <h3 className={`text-2xl font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>Instagram Reports</h3>
+                    <p className={`${isDark ? 'text-gray-300' : 'text-slate-600'}`}>
+                      Scrape Instagram post comments and generate comprehensive sentiment reports.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* CTA Section */}
+            <section className={`py-20 px-6 ${isDark ? 'bg-slate-900' : 'bg-slate-50'}`}>
+              <div className="max-w-4xl mx-auto text-center">
+                <h2 className={`text-4xl font-black mb-6 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                  Ready to Analyze?
+                </h2>
+                <p className={`text-xl mb-8 ${isDark ? 'text-gray-300' : 'text-slate-600'}`}>
+                  Start transforming social media data into actionable insights today.
+                </p>
+                <button 
+                  onClick={() => setCurrentPage('dashboard')}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-10 rounded-2xl text-xl transition-all duration-300 transform hover:scale-105 shadow-lg"
+                >
+                  Launch Dashboard
+                </button>
+              </div>
+            </section>
+          </div>
+        ) : (
+          <>
+            <div>
+              <Sidebar theme={theme} isOpen={sidebarOpen} setIsOpen={setSidebarOpen} currentView={currentPage} setCurrentView={setCurrentPage} />
+            </div>
+            <div className="content">
+              <div className={`fixed right-6 top-6 z-50 rounded-full border px-5 py-3 text-sm shadow-2xl backdrop-blur-xl transition-all duration-300 ${toast ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3 pointer-events-none'} ${isDark ? 'border-white/10 bg-slate-950/85 text-white' : 'border-slate-200 bg-white/95 text-slate-900'}`}>
+                {toast}
+              </div>
+            {/* Mobile Header */}
+            <div className={`lg:hidden flex items-center justify-between p-4 border-b ${isDark ? 'border-[#222]' : 'border-slate-200'}`}>
+              <button onClick={() => setSidebarOpen(true)} className={isDark ? 'text-white' : 'text-slate-900'}>
+                <Menu size={24}/>
+              </button>
+              <span className={`font-black uppercase tracking-tighter ${isDark ? 'text-white' : 'text-slate-900'}`}>VibeTrack</span>
+              <button onClick={cycleTheme} className={`rounded-full border px-3 py-2 text-sm font-semibold transition ${isDark ? 'border-white/20 bg-white text-black' : 'border-slate-300 bg-slate-900 text-white'}`}>
+                {themeLabel}
+              </button>
+            </div>
+
+            <main className={`relative flex-1 transition-all duration-300 ${currentPage !== 'landing' && sidebarOpen ? 'lg:ml-64' : currentPage !== 'landing' ? 'lg:ml-20' : ''}`}>
+
+            <div className="p-6 md:p-10 max-w-7xl mx-auto">
+              {/* Header Section */}
+              <header className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                  <h1 className={`text-5xl font-black tracking-tighter uppercase leading-none ${isDark ? 'text-white' : 'text-slate-900'}`}>
+                    VibeTrack<span className="text-[var(--text-secondary)]">.AI</span>
+                  </h1>
+                </div>
+              </header>
+
+              {currentPage === 'dashboard' && (
+                <div>
               <StatsCards 
                 total={data.analysis.length} 
                 positive={calculateVibeScore()} 
@@ -364,10 +477,10 @@ export default function App() {
                   )}
                 </div>
               )}
-            </>
+            </div>
           )}
 
-          {currentPage === 'analytics' && (
+          {false && (
             <div className="space-y-8">
               <div className="grid gap-6 lg:grid-cols-3 mb-6">
                 <div className={`${panelBg} ${panelBorder} p-6 rounded-3xl`}>
@@ -451,7 +564,7 @@ export default function App() {
             </div>
           )}
 
-          {currentPage === 'explore' && (
+          {false && (
             <div className="space-y-8">
               <div className={`${panelBg} ${panelBorder} p-8 rounded-3xl`}>
                 <p className="text-[var(--text-secondary)] uppercase tracking-[0.3em] text-[10px] mb-3">Explore Recommendations</p>

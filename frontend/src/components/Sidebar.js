@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutDashboard, Search, BarChart3, TrendingUp, X } from 'lucide-react';
+import { LayoutDashboard, Search, BarChart3, TrendingUp, X, Home } from 'lucide-react';
 
 export function Sidebar({ isOpen, setIsOpen, theme, currentView, setCurrentView }) {
   return (
@@ -32,6 +32,7 @@ export function Sidebar({ isOpen, setIsOpen, theme, currentView, setCurrentView 
         </div>
 
         <nav className="mt-6 px-4 space-y-2">
+          <NavItem icon={<Home size={22}/>} label="Home" active={currentView === 'landing'} showLabel={isOpen} onClick={() => setCurrentView('landing')} />
           <NavItem icon={<LayoutDashboard size={22}/>} label="Dashboard" active={currentView === 'dashboard'} showLabel={isOpen} onClick={() => setCurrentView('dashboard')} />
           <NavItem icon={<Search size={22}/>} label="Explore" active={currentView === 'explore'} showLabel={isOpen} onClick={() => setCurrentView('explore')} />
           <NavItem icon={<BarChart3 size={22}/>} label="Analytics" active={currentView === 'analytics'} showLabel={isOpen} onClick={() => setCurrentView('analytics')} />
