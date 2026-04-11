@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from 'recharts';
 
 export function SentimentGauge({ value = 0 }) {

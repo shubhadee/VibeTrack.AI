@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 
 export function StatsCards({ total = 0, positive = '0%', status = 'ACTIVE' }) {
   return (

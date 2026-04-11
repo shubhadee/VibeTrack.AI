@@ -5,8 +5,8 @@ import { StatsCards } from './components/StatsCards';
 import { TopKeywords } from './components/TopKeywords';
 import { SentimentGauge } from './components/SentimentGauge';
 import { 
-  Youtube, Instagram, Twitter, 
-  Hash, FileText, Menu, Search, SendHorizontal, Copy 
+  Youtube, Instagram, Twitter,
+  FileText, Menu, Search, SendHorizontal, Copy
 } from 'lucide-react';
 import {
   AreaChart,
@@ -32,7 +32,6 @@ export default function App() {
   const [theme, setTheme] = useState('dark');
   const [currentPage, setCurrentPage] = useState('dashboard');
   const [toast, setToast] = useState('');
-  const [hasAnalyzed, setHasAnalyzed] = useState(false);
 
   const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://127.0.0.1:8000';
 
@@ -48,7 +47,7 @@ export default function App() {
     const allThemes = themeOptions.map((option) => option.id);
     document.body.classList.remove(...allThemes.filter((name) => name !== activeTheme));
     document.body.classList.add(activeTheme);
-  }, [theme]);
+  }, [theme]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (!toast) return;
@@ -58,7 +57,6 @@ export default function App() {
 
   const isDark = theme !== 'light';
   const themeLabel = themeOptions.find((option) => option.id === theme)?.label || 'Theme';
-  const themeDescription = themeOptions.find((option) => option.id === theme)?.description || '';
   const notify = (message) => setToast(message);
   const cycleTheme = () => {
     const currentIndex = themeOptions.findIndex((option) => option.id === theme);
@@ -72,7 +70,6 @@ export default function App() {
   const panelBorder = 'border-[var(--panel-border)]';
   const panelBorderStrong = 'border-[var(--panel-border-strong)]';
   const panelText = 'text-[var(--text-primary)]';
-  const mutedText = 'text-[var(--text-muted)]';
   const secondaryText = 'text-[var(--text-secondary)]';
   const inputBg = 'bg-[var(--input-bg)]';
   const inputBorder = 'border-[var(--input-border)]';
@@ -93,7 +90,6 @@ export default function App() {
     }
 
     setLoading(true);
-    setHasAnalyzed(true);
     try {
       const response = await fetch(
         `${API_BASE_URL}/analyze?query=${encodeURIComponent(query)}&platform=${platform}`
@@ -202,7 +198,7 @@ export default function App() {
                 Transform social media signals into polished sentiment insights, keyword intelligence, and audience-ready reports.
               </p>
               <p className="text-[var(--text-secondary)] mt-4 font-mono text-sm uppercase tracking-widest italic">
-                // System Status: <span className={loading ? 'text-emerald-500 animate-pulse' : 'text-[var(--text-secondary)]'}>
+                {'// System Status: '}<span className={loading ? 'text-emerald-500 animate-pulse' : 'text-[var(--text-secondary)]'}>
                   {loading ? 'Analyzing Real-time Data...' : 'Ready'}
                 </span>
               </p>
@@ -512,15 +508,6 @@ export default function App() {
           )}
         </div>
       </main>
-    </div>
-  );
-}
-
-function StatsTile({ label, value, color = "text-white" }) {
-  return (
-    <div className="bg-[var(--panel-bg)] border-[var(--panel-border)] p-8 rounded-3xl group hover:border-white transition-all duration-500">
-      <p className="text-[var(--text-secondary)] text-[10px] font-black uppercase tracking-[0.3em] mb-3 group-hover:text-[var(--text-primary)] transition-colors">{label}</p>
-      <h2 className={`text-6xl font-black tracking-tighter ${color}`}>{value}</h2>
     </div>
   );
 }
