@@ -152,6 +152,18 @@ Make sure to configure these environment variables in Render:
 - `TWITTER_BEARER_TOKEN`
 - `APIFY_API_TOKEN`
 
+## Netlify Deployment (Frontend)
+
+If deploying the frontend separately on Netlify:
+
+1. Connect your GitHub repo to Netlify.
+2. Set the build command to: `npm run build`
+3. Set the publish directory to: `frontend/build`
+4. Configure the following environment variable in Netlify:
+   - `REACT_APP_API_BASE_URL` = Your Render backend URL (e.g., `https://your-backend.onrender.com`)
+
+This allows the frontend to communicate with the deployed backend.
+
 ## GitHub Repository
 
 This repository is configured as a normal Git project with the frontend stored as tracked files, not as a nested submodule.

@@ -34,6 +34,8 @@ export default function App() {
   const [toast, setToast] = useState('');
   const [hasAnalyzed, setHasAnalyzed] = useState(false);
 
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://127.0.0.1:8000';
+
   const themeOptions = [
     { id: 'dark', label: 'Midnight', description: 'Deep contrast and strong clarity' },
     { id: 'light', label: 'Bright', description: 'Clean, calm workspace' },
@@ -94,7 +96,7 @@ export default function App() {
     setHasAnalyzed(true);
     try {
       const response = await fetch(
-        `http://127.0.0.1:8000/analyze?query=${encodeURIComponent(query)}&platform=${platform}`
+        `${API_BASE_URL}/analyze?query=${encodeURIComponent(query)}&platform=${platform}`
       );
       
       if (!response.ok) throw new Error("Backend connection failed");
